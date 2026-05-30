@@ -72,3 +72,11 @@ ret
 ```
 
 To make the trick work, the `IMAGE_REL_BASED_DIR64` entry is created at `address_of_imm32 - 2`. Because of our delta bitmask (`00 00 XX XX XX XX 00 00`), the first two `00 00` bytes of the addition safely overlay the `mov eax` opcode (`0xB8`) and the preceding instruction byte, modifying nothing, while the `XX` bytes fall perfectly onto `0xDEADC0DE`.
+
+## Why is this cool
+
+Abusing relocations for obfuscation isn't a completely new concept. In the past, malware and packers used the relocation table as a decryption engine to unpack code. However, those techniques died out because they required a predictable base address. Once Microsoft enforced ASLR and killed the ability to manipulate load addresses reliably, those decryption engines broke.
+
+My approach does the exact opposite: instead of fighting ASLR, it abuses it. I don't care what the actual delta is, as long as the ASLR randomization produces a non-zero delta.
+
+On top of that, standard opaque predicates rely on math formulas that modern deobfuscators and symbolic execution engines (like Z3 or angr) can easily solve. But since this predicate is resolved mathematically by the Windows Loader before the CPU even executes the first instruction, automated analysis tools are completely blind to it.
