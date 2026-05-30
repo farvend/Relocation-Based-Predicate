@@ -91,4 +91,4 @@ My approach does the exact opposite: instead of fighting ASLR, it abuses it. I d
 
 On top of that, standard opaque predicates rely on math formulas that modern deobfuscators and symbolic execution engines (like Z3 or angr) can easily solve. But since this predicate is resolved mathematically by the Windows Loader before the CPU even executes the first instruction, automated analysis tools are completely blind to it.
 
-As an extra bonus, IDA doesn't visually mark these relocated bytes in its disassembly at all, thanks to our `IMAGE_REL_BASED_DIR64` on a 32-bit operand trick.
+As an extra bonus, IDA doesn't visually mark these relocated bytes in its disassembly at all, thanks to our `IMAGE_REL_BASED_DIR64` on a 32-bit operand trick. (If this technique is used without that trick and the relocation is applied to a mov with a 64-bit immediate, IDA marks the immediate with a bright red color)
