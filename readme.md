@@ -6,6 +6,8 @@ An anti-static-analysis technique that abuses the PE relocation table to create 
 
 **This is a proof of concept, not a complete, production-ready tool.**
 
+**Example binary is available in Releases**
+
 ## The Idea
 
 Static analyzers (IDA Pro, Binary Ninja, Ghidra) parse PE files **as they are on disk**. But the Windows PE Loader **modifies values in memory** before execution when applying relocations (ASLR fixes, vtables, IAT, global pointers, etc.).
