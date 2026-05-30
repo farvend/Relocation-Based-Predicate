@@ -80,3 +80,5 @@ Abusing relocations for obfuscation isn't a completely new concept. In the past,
 My approach does the exact opposite: instead of fighting ASLR, it abuses it. I don't care what the actual delta is, as long as the ASLR randomization produces a non-zero delta.
 
 On top of that, standard opaque predicates rely on math formulas that modern deobfuscators and symbolic execution engines (like Z3 or angr) can easily solve. But since this predicate is resolved mathematically by the Windows Loader before the CPU even executes the first instruction, automated analysis tools are completely blind to it.
+
+As an extra bonus, IDA doesn't visually mark these relocated bytes in its disassembly at all, thanks to our `IMAGE_REL_BASED_DIR64` on a 32-bit operand trick.
